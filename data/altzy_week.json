@@ -7,6 +7,6 @@
  "mincha_maariv": {"Sun-Thu":"4:55pm"},
  "friday": {"note":"From the Oct 30 schedule in this bulletin; a newer bulletin will update","candle_lighting":"5:52pm","mincha_kabbalat_shabbat":"5:55pm"},
  "shabbat": {"shacharit":"9:00am","mincha":"5:50pm","maariv":"6:53pm","havdala":"6:55pm"},
- "notes_by_date": {"2026-11-03": ["Online shiur in Melachim, 7:30pm"]},
+ "notes_by_date": {},
  "updated_at": "2026-11-03T14:50:00-05:00"
 }

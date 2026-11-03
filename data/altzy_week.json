@@ -1,0 +1,12 @@
+{
+ "bulletin_date": "2026-10-29",
+ "parsha": "Vayera",
+ "week_start": "2026-11-01",
+ "week_end": "2026-11-07",
+ "shacharit": {"Sun":"8:00am","Mon":"6:30am","Tue":"6:40am","Wed":"6:40am","Thu":"6:30am","Fri":"6:40am"},
+ "mincha_maariv": {"Sun-Thu":"4:55pm"},
+ "friday": {"note":"From the Oct 30 schedule in this bulletin; a newer bulletin will update","candle_lighting":"5:52pm","mincha_kabbalat_shabbat":"5:55pm"},
+ "shabbat": {"shacharit":"9:00am","mincha":"5:50pm","maariv":"6:53pm","havdala":"6:55pm"},
+ "notes_by_date": {"2026-11-03": ["Online shiur in Melachim, 7:30pm"]},
+ "updated_at": "2026-11-03T14:50:00-05:00"
+}

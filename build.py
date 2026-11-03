@@ -8,6 +8,7 @@ Writes briefs/YYYY-MM-DD.html, makes index.html a copy of the newest brief,
 and rebuilds archive.html from everything in briefs/.
 """
 import sys, re, datetime, pathlib, html
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parent
 BRIEFS = ROOT / "briefs"
@@ -30,9 +31,10 @@ td{padding:3px 6px 3px 0;vertical-align:top}
 ul.archive{list-style:none;padding:0}
 ul.archive li{padding:8px 0;border-bottom:1px solid var(--line)}
 a{color:var(--accent)}
+footer{font:12px/1.5 system-ui,sans-serif;color:var(--muted);text-align:center;margin-top:24px;padding-top:12px;border-top:1px solid var(--line)}
 """
 
-def page(title, kicker, body):
+def page(title, kicker, body, footer=""):
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -42,8 +44,13 @@ def page(title, kicker, body):
 <header><div class="kicker">{html.escape(kicker)}</div><h1>{html.escape(title)}</h1>
 <nav><a href="{{root}}index.html">Today</a><a href="{{root}}archive.html">Archive</a></nav></header>
 {body}
+{footer}
 </div></body></html>
 """
+
+def published_stamp():
+    now = datetime.datetime.now(ZoneInfo("America/Toronto"))
+    return now.strftime("%A, %B %-d, %Y at %-I:%M %p ") + now.tzname()
 
 def nice(d):
     return d.strftime("%A, %B %-d, %Y")
@@ -53,7 +60,8 @@ def main():
     frag = pathlib.Path(sys.argv[2]).read_text(encoding="utf-8")
     frag = re.sub(r"(?is)</?(html|body|head)[^>]*>", "", frag)
     BRIEFS.mkdir(exist_ok=True)
-    doc = page(f"Morning brief", nice(date), frag)
+    stamp = html.escape(published_stamp())
+    doc = page("Morning brief", nice(date), frag, f"<footer>Published {stamp}</footer>")
     (BRIEFS / f"{date}.html").write_text(doc.replace("{root}", "../"), encoding="utf-8")
 
     dates = sorted((datetime.date.fromisoformat(p.stem) for p in BRIEFS.glob("*.html")), reverse=True)
@@ -62,7 +70,8 @@ def main():
     (ROOT / "index.html").write_text(newest_doc, encoding="utf-8")
 
     items = "\n".join(f'<li><a href="briefs/{d}.html">{nice(d)}</a></li>' for d in dates)
-    arch = page("Archive", "Past morning briefs", f'<section><ul class="archive">\n{items}\n</ul></section>')
+    arch = page("Archive", "Past morning briefs", f'<section><ul class="archive">\n{items}\n</ul></section>',
+               f"<footer>Last updated {stamp}</footer>")
     (ROOT / "archive.html").write_text(arch.replace("{root}", ""), encoding="utf-8")
     print(f"published {date}; {len(dates)} brief(s) in archive")
 

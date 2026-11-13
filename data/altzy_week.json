@@ -1,12 +1,12 @@
 {
- "bulletin_date": "2026-11-05",
- "parsha": "Chayei Sara",
- "week_start": "2026-11-08",
- "week_end": "2026-11-14",
- "shacharit": {"Sun":"8:00am","Mon":"6:30am","Tue":"6:30am","Wed":"6:30am","Thu":"6:30am","Fri":"6:40am"},
- "mincha_maariv": {"Sun-Thu":"4:45pm"},
- "friday": {"candle_lighting":"4:43pm","mincha_kabbalat_shabbat":"4:45pm"},
- "shabbat": {"shacharit":"9:00am","mincha":"4:40pm","maariv":"5:43pm","havdala":"5:46pm"},
- "notes_by_date": {"2026-11-10": ["Rosh Chodesh Kislev"], "2026-11-11": ["Rosh Chodesh Kislev"]},
- "updated_at": "2026-11-06T06:10:00-05:00"
+ "bulletin_date": "2026-11-12",
+ "parsha": "Toldot",
+ "week_start": "2026-11-15",
+ "week_end": "2026-11-21",
+ "shacharit": {"Sun":"8:00am","Mon":"6:30am","Tue":"6:40am","Wed":"6:40am","Thu":"6:30am","Fri":"6:40am"},
+ "mincha_maariv": {"Sun-Thu":"4:40pm"},
+ "friday": {"date":"2026-11-13","candle_lighting":"4:35pm","mincha_kabbalat_shabbat":"4:35pm"},
+ "shabbat": {"date":"2026-11-14","shacharit":"9:00am","mincha":"4:30pm","maariv":"5:35pm","havdala":"5:38pm"},
+ "notes_by_date": {},
+ "updated_at": "2026-11-13T06:00:00-05:00"
 }

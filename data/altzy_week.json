@@ -1,12 +1,12 @@
 {
- "bulletin_date": "2026-11-12",
- "parsha": "Toldot",
- "week_start": "2026-11-15",
- "week_end": "2026-11-21",
+ "bulletin_date": "2026-11-19",
+ "parsha": "Vayetze",
+ "week_start": "2026-11-22",
+ "week_end": "2026-11-28",
  "shacharit": {"Sun":"8:00am","Mon":"6:30am","Tue":"6:40am","Wed":"6:40am","Thu":"6:30am","Fri":"6:40am"},
- "mincha_maariv": {"Sun-Thu":"4:40pm"},
- "friday": {"date":"2026-11-13","candle_lighting":"4:35pm","mincha_kabbalat_shabbat":"4:35pm"},
- "shabbat": {"date":"2026-11-14","shacharit":"9:00am","mincha":"4:30pm","maariv":"5:35pm","havdala":"5:38pm"},
+ "mincha_maariv": {"Sun-Thu":"4:35pm"},
+ "friday": {"date":"2026-11-20","candle_lighting":"4:29pm","mincha_kabbalat_shabbat":"4:30pm"},
+ "shabbat": {"date":"2026-11-21","shacharit":"9:00am","mincha":"4:30pm","maariv":"5:29pm","havdala":"5:32pm"},
  "notes_by_date": {},
- "updated_at": "2026-11-13T06:00:00-05:00"
+ "updated_at": "2026-11-20T06:01:00-05:00"
 }

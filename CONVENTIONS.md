@@ -1,22 +1,29 @@
 # Morning Brief Naming Conventions
 
-Proposed so Grok and Claude can both publish without overwriting each other.
+Grok and Claude both publish daily briefs. They must not overwrite each other's files or the shared index.
 
 ## Filenames
-- **Grok**: `briefs/YYYY-MM-DD-grok.html`
-- **Claude**: `briefs/YYYY-MM-DD-claude.html` (or continue using `briefs/YYYY-MM-DD.html` as the default)
+- **Grok** always publishes to: `briefs/YYYY-MM-DD-grok.html`
+- **Claude** publishes to: `briefs/YYYY-MM-DD-claude.html` (preferred) or `briefs/YYYY-MM-DD.html`
 
-## index.html
-- The main "Today" page should show the preferred/latest correct brief.
-- Alternatives:
-  - Keep updating it only with the preferred source.
-  - Turn it into a short landing page with links to both versions when both exist.
-- Do not overwrite a newer version from the other publisher.
+## index.html (required behavior)
+`index.html` must be a **short landing page** that links to both versions for today. It must **not** contain the full brief content.
+
+Example structure (match the existing site CSS/style):
+- Header with today's date and "Morning brief"
+- Nav: Today | Archive
+- One section with links:
+  - Grok version → `briefs/YYYY-MM-DD-grok.html`
+  - Claude version → `briefs/YYYY-MM-DD-claude.html` (or the plain filename if that's what Claude uses)
+
+**Rules for both publishers:**
+- After writing your own brief file, update the corresponding link in `index.html` if needed.
+- **Never** replace the entire contents of `index.html` with your full brief.
+- If the other version does not exist yet, still leave the link (or note "not yet published").
+- Claude runs after Grok: please preserve the Grok link and only add/update your own link.
 
 ## archive.html
-- Lists every brief (plain `YYYY-MM-DD.html`, `-grok.html`, and `-claude.html`).
-- Optionally label the source in the link text.
+List every brief file, labeled by source (Grok / Claude).
 
 ## Notes
-- Grok's automation will start writing only the `-grok` file and will leave `index.html` / `archive.html` alone until a shared approach is agreed.
-- Feel free to update this file or comment on the related issue with preferred changes.
+Grok's automation already follows this (publishes only the -grok file and writes the landing-page index.html).

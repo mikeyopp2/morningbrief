@@ -4,8 +4,10 @@
 Usage: python3 build.py YYYY-MM-DD path/to/brief_fragment.html
 
 The fragment is the inner HTML of the brief (sections only, no <html>/<body>).
-Writes briefs/YYYY-MM-DD.html, makes index.html a copy of the newest brief,
-and rebuilds archive.html from everything in briefs/.
+Follows CONVENTIONS.md (Grok and Claude both publish):
+- writes Claude's brief to briefs/YYYY-MM-DD-claude.html (never touches -grok files)
+- index.html becomes a short landing page linking to today's Grok and Claude briefs
+- archive.html lists every brief file, labeled by source (Grok / Claude).
 """
 import sys, re, datetime, pathlib, html
 from zoneinfo import ZoneInfo
@@ -55,25 +57,51 @@ def published_stamp():
 def nice(d):
     return d.strftime("%A, %B %-d, %Y")
 
+SOURCES = [("grok", "Grok version"), ("claude", "Claude version")]
+FNAME = re.compile(r"^(\d{4}-\d{2}-\d{2})(?:-(grok|claude))?$")
+
+def scan():
+    """{date: {source: filename}} for every brief file; plain YYYY-MM-DD.html = older brief."""
+    out = {}
+    for p in BRIEFS.glob("*.html"):
+        m = FNAME.match(p.stem)
+        if m:
+            d = datetime.date.fromisoformat(m.group(1))
+            out.setdefault(d, {})[m.group(2) or "plain"] = p.name
+    return out
+
 def main():
     date = datetime.date.fromisoformat(sys.argv[1])
     frag = pathlib.Path(sys.argv[2]).read_text(encoding="utf-8")
     frag = re.sub(r"(?is)</?(html|body|head)[^>]*>", "", frag)
     BRIEFS.mkdir(exist_ok=True)
     stamp = html.escape(published_stamp())
-    doc = page("Morning brief", nice(date), frag, f"<footer>Published {stamp}</footer>")
-    (BRIEFS / f"{date}.html").write_text(doc.replace("{root}", "../"), encoding="utf-8")
+    doc = page("Morning brief", nice(date) + " · Claude", frag, f"<footer>Published {stamp}</footer>")
+    (BRIEFS / f"{date}-claude.html").write_text(doc.replace("{root}", "../"), encoding="utf-8")
 
-    dates = sorted((datetime.date.fromisoformat(p.stem) for p in BRIEFS.glob("*.html")), reverse=True)
-    newest = dates[0]
-    newest_doc = (BRIEFS / f"{newest}.html").read_text(encoding="utf-8").replace('href="../', 'href="')
-    (ROOT / "index.html").write_text(newest_doc, encoding="utf-8")
+    files = scan()
+    today = max(files)
+    links = []
+    for src, label in SOURCES:
+        f = files[today].get(src)
+        links.append(f'<li><a href="briefs/{f}">{label}</a></li>' if f
+                     else f'<li>{label} — <i>not yet published</i></li>')
+    if "plain" in files[today]:
+        links.append(f'<li><a href="briefs/{files[today]["plain"]}">Earlier brief</a></li>')
+    landing = "<section><h2>Today's briefs</h2><ul class=\"archive\">\n" + "\n".join(links) + "\n</ul></section>"
+    idx = page("Morning brief", nice(today), landing, f"<footer>Updated {stamp}</footer>")
+    (ROOT / "index.html").write_text(idx.replace("{root}", ""), encoding="utf-8")
 
-    items = "\n".join(f'<li><a href="briefs/{d}.html">{nice(d)}</a></li>' for d in dates)
-    arch = page("Archive", "Past morning briefs", f'<section><ul class="archive">\n{items}\n</ul></section>',
+    rows = []
+    for d in sorted(files, reverse=True):
+        parts = [f'<a href="briefs/{files[d][s]}">{lab.split()[0]}</a>' for s, lab in SOURCES if s in files[d]]
+        if "plain" in files[d]:
+            parts.append(f'<a href="briefs/{files[d]["plain"]}">Brief</a>')
+        rows.append(f"<li>{nice(d)} — " + " · ".join(parts) + "</li>")
+    arch = page("Archive", "Past morning briefs", "<section><ul class=\"archive\">\n" + "\n".join(rows) + "\n</ul></section>",
                f"<footer>Last updated {stamp}</footer>")
     (ROOT / "archive.html").write_text(arch.replace("{root}", ""), encoding="utf-8")
-    print(f"published {date}; {len(dates)} brief(s) in archive")
+    print(f"published {date} (claude); index links: " + ", ".join(s for s, _ in SOURCES if s in files[today]) + f"; {len(files)} day(s) in archive")
 
 if __name__ == "__main__":
     main()

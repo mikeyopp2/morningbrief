@@ -1,0 +1,22 @@
+{
+  "extracted_date": "2026-11-27",
+  "bulletin_date": "Thu, 26 Nov 2026",
+  "parsha": "Vayishlach",
+  "kiddush_sponsors": "Moishe and Jodi Gottesman to commemorate the yarzheit of Moishe's father, Herman Gottesman, Shalom Tzvi Ben Chaim Yisroel, z\"l. Kiddush team 4",
+  "weekday": {
+    "sun_shacharit": "8:00am",
+    "mon_thu_shacharit": "6:30am",
+    "tue_wed_fri_shacharit": "6:40am",
+    "sun_thu_mincha_maariv": "4:30pm"
+  },
+  "friday": {
+    "mincha_kabbalat": "4:25pm",
+    "candle_lighting": "4:25pm"
+  },
+  "shabbat": {
+    "shacharit": "9:00am",
+    "mincha": "4:25pm",
+    "maariv": "5:25pm",
+    "havdalah": "5:28pm"
+  }
+}
